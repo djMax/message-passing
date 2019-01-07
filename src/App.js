@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextField, Button, List, ListItem, ListItemText, Paper } from '@material-ui/core';
+import { TextField, Button, List, ListItem, ListItemText } from '@material-ui/core';
 import Api from './api';
 
 import './App.css';
@@ -26,6 +26,12 @@ class App extends Component {
     this.setState({
       peers: newPeers,
       events: addEvent(this, `New connect with id ${id}`),
+    });
+  }
+
+  onConnectionList(ids) {
+    this.setState({
+      events: addEvent(this, `Current connections: ${ids.join(',')}`),
     });
   }
 
@@ -56,7 +62,11 @@ class App extends Component {
   }
 
   sendBroadcast() {
-    this.api.sendBroadcast(this.state.message);
+    const { message } = this.state;
+    this.api.sendBroadcast(message);
+    this.setState({
+      events: addEvent(this, `You sent a broadcast: ${message}`)
+    })
   }
 
   render() {
@@ -78,9 +88,7 @@ class App extends Component {
         <List dense>
           {events.map(event => (
             <ListItem>
-              <Paper>
-                <ListItemText>{event}</ListItemText>
-              </Paper>
+              <ListItemText>{event}</ListItemText>
             </ListItem>
           ))}
         </List>

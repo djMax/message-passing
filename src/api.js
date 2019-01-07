@@ -11,6 +11,7 @@ export default class Api {
       this.socket.on('BROADCAST', ({ id, message }) => subscriber.onBroadcast(id, message)),
       this.socket.on('MESSAGE', ({ id, message }) => subscriber.onMessage(id, message)),
       this.socket.on('DISCONNECT', id => subscriber.onDisconnect(id)),
+      this.socket.on('CONNECTIONS', ids => subscriber.onConnectionList(ids));
     ];
   }
 

@@ -12,6 +12,7 @@ io.on('connection', (client) => {
   // Tell everyone about our new guest
   client.broadcast.emit('NEW_CONNECTION', client.id);
   console.log('New connection', client.id);
+  client.emit('CONNECTIONS', Object.keys(connections));
   connections[client.id] = client;
 
   // This client has asked to send a broadcast message
